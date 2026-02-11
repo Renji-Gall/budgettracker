@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Transactions from './pages/Transactions';
 import PrivateRoute from './PrivateRoute';
@@ -11,17 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route
-          path="/transactions"
-          element={
-            <PrivateRoute token={token}>
-              <Transactions token={token} />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to={token ? "/transactions" : "/login"} />} />
+        <Route path="/" element={<Navigate to="/transactions" replace />} />
+        <Route path="/transactions" element={<Transactions token={token} />} />
       </Routes>
     </BrowserRouter>
   );
