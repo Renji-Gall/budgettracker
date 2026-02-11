@@ -95,33 +95,14 @@ app.post('/api/signup', async (req, res) => {
     await mongoose.connect(process.env.MONGO_URL);
     const { username, password } = req.body;
 
-    // ✅ Password validation
-    const isLongEnough = password.length >= 8;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasNumber = /\d/.test(password);
-
-    if (!isLongEnough || !hasUppercase || !hasNumber) {
-      return res.status(400).json({ error: 'Password must be at least 8 characters, include an uppercase letter and a number' });
-    }
-
-    // ✅ Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // ✅ Create user
     const user = await User.create({ username, password: hashedPassword });
 
-    res.status(201).json({ message: 'User created' }); // success
-
+    res.status(201).json({ message: 'User created' }); // ✅ JSON
   } catch (err) {
-    // if username already exists (unique index violation)
-    if (err.code === 11000) {
-      return res.status(400).json({ error: 'Username already exists' });
-    }
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    res.status(400).json({ error: 'Username already exists' }); // ✅ JSON
   }
 });
-
 
 
 app.post('/api/login', async (req, res) => {
