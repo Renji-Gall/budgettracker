@@ -31,7 +31,7 @@ function Transactions() {
       if (!token) return;
       
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/transactions`, {
+        const res = await fetch('/api/transactions', {
           headers: { 'Authorization': 'Bearer ' + token }
         });
         const data = await res.json();
@@ -65,7 +65,7 @@ function Transactions() {
     // If logged in, save to backend
     if (token) {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/transactions`, {
+        const res = await fetch('/api/transactions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function Transactions() {
   async function deleteTransaction(id) {
     if (token) {
       try {
-        await fetch(`${process.env.REACT_APP_API_URL}/transactions/${id}`, {
+        await fetch(`/api/transactions/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': 'Bearer ' + token }
         });
@@ -119,7 +119,7 @@ function Transactions() {
 
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+      const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -169,7 +169,7 @@ function Transactions() {
     setPasswordError('');
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
+      const res = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
